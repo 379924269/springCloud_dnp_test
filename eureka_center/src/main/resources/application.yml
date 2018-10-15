@@ -1,0 +1,37 @@
+#问题1：
+#com.sun.jersey.api.client.ClientHandlerException: java.net.ConnectException: Connection refused: connect
+#或者com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+#原因如下：
+#在默认设置下，Eureka服务注册中心也会将自己作为客户端来尝试注册它自己，所以我们需要禁用它的客户端注册行为。
+#禁止方式如下：在application.properties配置文件中增加以下内容
+#eureka.client.register-with-eureka=false
+#eureka.client.fetch-registry=false
+
+
+spring:
+  application:
+    name: eureka-center
+
+server:
+  port: 1111
+#eureka:
+#  instance:
+#    prefer-ip-address: true
+#    status-page-url: /eureka/info
+#    status-page-url-path: /eureka/health
+#    hostname: localhost
+#  client:
+#    register-with-eureka: false
+#    fetch-registry: false
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    status-page-url-path: /actuator/info #eureka注册中心的url link
+    health-check-url-path: /actuator/health #健康检查的url
+    hostname: localhost
+  client:
+    register-with-eureka: true #是否注册到注册中心
+    fetch-registry: false #是否从注册中心拉取注册服务列表
+    service-url:
+      defaultZone: http://localhost:1111/eureka/

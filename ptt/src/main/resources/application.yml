@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: ptt_client
+
+server:
+  port: 222
+
+#eureka:
+#    instance:
+#        statusPageUrlPath: /actuator/info
+#        healthCheckUrlPath: /actuator/health
+#        # docker 部署开启
+#        prefer-ip-address: true
+#        ip-address: 127.0.0.1
+#    client:
+#        serviceUrl:
+##            defaultZone: http://localhost:8761/eureka/
+#                    # docker 部署开启
+#            defaultZone: http://127.0.0.1:1111/eureka/
+eureka:
+  instance:
+    prefer-ip-address: true
+    status-page-url-path: /actuator/info #eureka注册中心的url link
+    health-check-url-path: /actuator/health #健康检查的url
+    hostname: localhost
+  client:
+    register-with-eureka: true #是否注册到注册中心
+    fetch-registry: false #是否从注册中心拉取注册服务列表
+    service-url:
+      defaultZone: http://localhost:1111/eureka/
+
+
+
