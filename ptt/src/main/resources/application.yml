@@ -1,6 +1,6 @@
 spring:
   application:
-    name: ptt_client
+    name: ptt-client
 
 server:
   port: 222
