@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
  * @create 2017-06-08 11:51
  */
 @RestController
-@RequestMapping("hellow")
+@RequestMapping("hello")
 public class UserController {
 
     @GetMapping("")

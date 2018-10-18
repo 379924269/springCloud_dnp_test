@@ -6,6 +6,13 @@ spring:
       discovery:
         locator:
           enabled: true
+      routes:
+       - id : ptt
+         uri: lb://device-adapttion
+         predicates:
+          - Path=/ptt-server/**
+         filters:
+          - IpLimitFilter
 
 server:
   port: 4444
@@ -13,7 +20,3 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:1111/eureka/
-
-logging:
-  level:
-    org.springframework.cloud.gateway: debug
