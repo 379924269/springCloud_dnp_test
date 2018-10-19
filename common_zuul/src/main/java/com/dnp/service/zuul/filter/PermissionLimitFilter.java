@@ -6,6 +6,7 @@ import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
+import sun.rmi.runtime.Log;
 
 /**
  * 如果是内部服务器则直接通过，springcloud内部服务器的相互调用
@@ -14,20 +15,11 @@ import org.springframework.stereotype.Component;
  * @date 2018/10/18 10:07
  */
 @Component
-public class IpLimitFilter extends AbstractGatewayFilterFactory<Object> {
+public class PermissionLimitFilter extends AbstractGatewayFilterFactory<Object> {
     Logger LOG = LoggerFactory.getLogger(AuthFilter.class);
 
     @Override
     public GatewayFilter apply(Object o) {
-        return getGatewayFilter(LOG);
-    }
-
-    public static GatewayFilter getGatewayFilter(Logger LOG) {
-        return (exchange, chain) -> {
-            LOG.info("=====ipFilter=====");
-            String ip = exchange.getRequest().getRemoteAddress().getAddress().getHostAddress();
-            LOG.info("===ip=== {}", ip);
-            return chain.filter(exchange);
-        };
+        return IpLimitFilter.getGatewayFilter(LOG);
     }
 }

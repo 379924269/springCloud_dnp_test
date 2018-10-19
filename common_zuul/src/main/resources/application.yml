@@ -13,6 +13,7 @@ spring:
           - Path=/ptt-server/**
          filters:
           - IpLimitFilter
+          - PermissionLimitFilter
 
 server:
   port: 4444
