@@ -6,3 +6,6 @@ springCloud 学习测试
 - 最后还是选择了比较新的springcloud finchley版本，毕竟是新项目吗。去采坑吧！！！！
 
 项目启动后的访问地址：
+
+
+## 网关整合多个swagger：

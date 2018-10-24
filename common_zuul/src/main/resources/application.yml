@@ -14,6 +14,13 @@ spring:
          filters:
           - IpLimitFilter
           - PermissionLimitFilter
+        - id : auth
+          uri: lb://common_auth
+          predicates:
+           - Path=/common_auth/**
+          filters:
+           - IpLimitFilter
+           - PermissionLimitFilter
 
 server:
   port: 4444

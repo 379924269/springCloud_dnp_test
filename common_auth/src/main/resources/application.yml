@@ -1,0 +1,14 @@
+#redis
+#redis
+spring:
+  redis:
+    host: localhost
+    port: 6379
+    password:
+    timeout: 6000
+server:
+  port: 5555
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:1111/eureka/
