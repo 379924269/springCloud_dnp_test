@@ -6,6 +6,8 @@ spring:
     port: 6379
     password:
     timeout: 6000
+  application:
+    name: auth
 server:
   port: 5555
 eureka:

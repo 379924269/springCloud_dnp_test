@@ -16,7 +16,7 @@ import sun.rmi.runtime.Log;
  */
 @Component
 public class PermissionLimitFilter extends AbstractGatewayFilterFactory<Object> {
-    Logger LOG = LoggerFactory.getLogger(AuthFilter.class);
+    Logger LOG = LoggerFactory.getLogger(PermissionLimitFilter.class);
 
     @Override
     public GatewayFilter apply(Object o) {

@@ -1,6 +1,6 @@
 spring:
   application:
-    name: device-adapttion
+    name: device
 eureka:
   client:
     service-url:

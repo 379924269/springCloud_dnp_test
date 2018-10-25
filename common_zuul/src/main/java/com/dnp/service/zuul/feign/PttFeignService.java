@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  *@Author 华仔
  *@DATE 2018/10/18 10:40
  */
-@FeignClient(name = "device-adapttion", fallback = PttFeignProviderHystrix.class)
+@FeignClient(name = "device", fallback = PttFeignProviderHystrix.class)
 public interface PttFeignService {
 
     /**

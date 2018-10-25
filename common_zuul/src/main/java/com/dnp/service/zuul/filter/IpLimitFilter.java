@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class IpLimitFilter extends AbstractGatewayFilterFactory<Object> {
-    Logger LOG = LoggerFactory.getLogger(AuthFilter.class);
+    Logger LOG = LoggerFactory.getLogger(IpLimitFilter.class);
 
     @Override
     public GatewayFilter apply(Object o) {
