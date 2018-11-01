@@ -25,8 +25,8 @@ public class AuthFilter implements GlobalFilter {
 
     @Override
     public Mono<Void> filter(ServerWebExchange serverWebExchange, GatewayFilterChain gatewayFilterChain) {
-        String pttAuth = pttFeignService.hello("xiaoming");
-        LOG.info("pttAuto = {}", pttAuth);
+        //String pttAuth = pttFeignService.hello("xiaoming");
+        //LOG.info("pttAuto = {}", pttAuth);
         return gatewayFilterChain.filter(serverWebExchange);
     }
 

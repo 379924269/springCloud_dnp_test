@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.dnp.service.zuul</groupId>
-	<artifactId>common_zuul</artifactId>
+	<artifactId>common_gateway</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>common_zuul</name>
+	<name>common_gateway</name>
 	<description>Demo project for Spring Boot</description>
 
 	<parent>
