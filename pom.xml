@@ -15,6 +15,7 @@
         <module>common_gateway</module>
         <module>device_adaption</module>
         <module>common_auth</module>
+        <module>auto_generate_code</module>
     </modules>
 
     <!--<parent>-->
