@@ -8,9 +8,21 @@ spring:
     timeout: 6000
   application:
     name: auth
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://localhost:3306/spring-cloud-auth?useUnicode=true&characterEncoding=utf8&characterSetResults=utf8
+    driver-class-name: com.mysql.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
 server:
   port: 5555
+  servlet:
+    path: /auth/
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:1111/eureka/
+
