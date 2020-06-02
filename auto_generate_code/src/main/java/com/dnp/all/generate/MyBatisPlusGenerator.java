@@ -26,7 +26,7 @@ public class MyBatisPlusGenerator {
     /*文件生成存放的目录*/
     private static String OUT_PUT_DIR = "auto_generate_code/code/";
     /*包名*/
-    private static String PACKAGE_NAME = "com.dnp.service.zuul.modular.autoCode";
+    private static String PACKAGE_NAME = "com.dnp.ptt";
     /*作者*/
     private static String AUTHOR = "huazai";
     /*数据库用户名称*/

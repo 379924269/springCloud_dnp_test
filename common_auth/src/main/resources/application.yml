@@ -1,11 +1,11 @@
 #redis
 #redis
 spring:
-  redis:
-    host: localhost
-    port: 6379
-    password:
-    timeout: 6000
+#  redis:
+#    host: localhost
+#    port: 6379
+#    password:
+#    timeout: 6000
   application:
     name: auth
   datasource:
@@ -25,4 +25,6 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:1111/eureka/
+
+
 
