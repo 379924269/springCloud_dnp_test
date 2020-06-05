@@ -1,9 +1,7 @@
 package com.dnp.common.auth.controller;
 
-import com.dnp.common.auth.client.AuthServiceClient;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,8 +21,8 @@ public class Oauth2Controller {
     @Autowired
     private ClientDetailsService clientDetailsService;
 
-    @Autowired
-    AuthServiceClient client;
+//    @Autowired
+//    AuthServiceClient client;
 
     @ApiOperation(value = "获取授权码", notes = "Test")
     @RequestMapping(value = "/getPermission", method = RequestMethod.GET)
@@ -41,10 +39,10 @@ public class Oauth2Controller {
     @ApiOperation(value = "获取token")
     @RequestMapping(value = "/getToken", method = RequestMethod.POST)
     public Object getToken(@RequestParam String userName, @RequestParam String password) {
-        String userNamePasswordStr = Base64.encodeBase64String("server:123456".getBytes());
-        String authorization = "Basic " + userNamePasswordStr;
-        Object object = client.getToken(authorization, "password", userName, password);
-        return object;
+//        String userNamePasswordStr = Base64.encodeBase64String("server:123456".getBytes());
+//        String authorization = "Basic " + userNamePasswordStr;
+//        Object object = client.getToken(authorization, "password", userName, password);
+        return null;
     }
 
 }

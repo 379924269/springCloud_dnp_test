@@ -17,14 +17,13 @@ spring:
     hibernate:
       ddl-auto: none
     show-sql: true
-server:
-  port: 5555
-  servlet:
-    path: /auth/
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:1111/eureka/
-
+server:
+  port: 5555
+  servlet:
+    context-path: /oauth2/
 
 

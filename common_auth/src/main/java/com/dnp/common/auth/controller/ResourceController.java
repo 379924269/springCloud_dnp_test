@@ -26,6 +26,6 @@ public class ResourceController {
     @ApiOperation(value = "查询所有资源", notes = "查询所有资源")
     public Object findAll(
             @ApiParam(name = "search", value = "模糊查询字段", required = false) @RequestParam(required = false, defaultValue = "") String search) {
-        return null;
+        return "xcvxzv";
     }
 }

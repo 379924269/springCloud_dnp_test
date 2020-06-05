@@ -42,6 +42,6 @@ public class CustomUserDetailsService implements UserDetailsService {
             }
         }
 
-        return new org.springframework.security.core.userdetails.User("fzp", "123456", true, true, true, true, authorities);
+        return new org.springframework.security.core.userdetails.User("admin", "$2a$10$CA7JaJBT9.oRcbBpXfbvtecL9CSDXQXyk/d6LhIqhjGHfunqHP.de", true, true, true, true, authorities);
     }
 }
