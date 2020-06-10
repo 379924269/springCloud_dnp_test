@@ -1,48 +1,57 @@
 package com.dnp.common.auth.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.dnp.common.auth.util.RestTempleteUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestTemplate;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
- * 第3放接口，通过客户端id和密码获取授权码，然后在通过
+ * description:认证服务相关接口
  *
- * @author 华仔
- * @date 2018/10/19 14:47
+ * @author: 华仔
+ * @date: 2020/6/5
  */
-@Api(value = "Oauth2Controller", description = "第3放授权")
+@Api(value = "Oauth2Controller", description = "认证服务相关接口")
 @RestController
 public class Oauth2Controller {
     @Autowired
     private ClientDetailsService clientDetailsService;
 
-//    @Autowired
-//    AuthServiceClient client;
-
-    @ApiOperation(value = "获取授权码", notes = "Test")
-    @RequestMapping(value = "/getPermission", method = RequestMethod.GET)
-    public String getOauth2Code(@RequestParam Integer userId) {
-        return "getPermission OK!";
-    }
-
-    @ApiOperation(value = "创建一个客户端信息")
-    @RequestMapping(value = "/addClient", method = RequestMethod.POST)
-    public Object addClient(@RequestParam String clientId) {
+    @ApiOperation(value = "获取客户端详情")
+    @RequestMapping(value = "/getClientInfo", method = RequestMethod.POST)
+    public Object getClientInfo(@RequestParam String clientId) {
         return clientDetailsService.loadClientByClientId(clientId);
     }
 
-    @ApiOperation(value = "获取token")
+    @ApiOperation(value = "密码模式获取token")
     @RequestMapping(value = "/getToken", method = RequestMethod.POST)
-    public Object getToken(@RequestParam String userName, @RequestParam String password) {
-//        String userNamePasswordStr = Base64.encodeBase64String("server:123456".getBytes());
-//        String authorization = "Basic " + userNamePasswordStr;
-//        Object object = client.getToken(authorization, "password", userName, password);
-        return null;
-    }
+    public String getToken(HttpServletRequest request,
+                           @RequestParam(defaultValue = "admin") String username,
+                           @RequestParam(defaultValue = "123456") String password,
+                           @RequestParam(defaultValue = "client") String client_id,
+                           @RequestParam(defaultValue = "123456") String client_secret) {
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("username", username);
+        params.add("password", password);
+        params.add("grant_type", "password");
+        params.add("client_id", client_id);
+        params.add("client_secret", client_secret);
 
+        String baseUrl = request.getRequestURL().substring(0, request.getRequestURL().length() - 9) + "/oauth/token";
+        return new RestTempleteUtil().sendPost(baseUrl, params);
+    }
 }

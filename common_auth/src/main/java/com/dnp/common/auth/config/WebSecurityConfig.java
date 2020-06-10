@@ -34,7 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http.authorizeRequests().antMatchers("/resource").permitAll();
+        http.authorizeRequests().antMatchers("/getToken").permitAll();
 
         http.authorizeRequests().regexMatchers(".*swagger.*", ".*v2.*", ".*webjars.*").permitAll()
                 .anyRequest().authenticated()

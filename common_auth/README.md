@@ -7,6 +7,12 @@ web的优先级比resource的优先级低   web@order(100) 而resource @order(3)
 - [oauth2四种授权模式认证流程参考](https://blog.csdn.net/lixiang987654321/article/details/83381494)
 - [springbootsecurity拦截器图片](doc/springbootsecurityFilter.png)
 
+## 让/oauth/token 支持get方法
+在AuthorizationServerEndpointsConfigurer中加上
+endpoints.authenticationManager(authenticationManager)
+                    .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST);
+                    
+
 ##FQA
 ### 我在oauth2学习中遇到的问题
 #### 1、我忘了在client中配置密码模式：
