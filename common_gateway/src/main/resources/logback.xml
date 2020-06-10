@@ -1,72 +1,127 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<!--具体参数属性参考地址：
+    1、https://www.cnblogs.com/reason-cai/p/6763108.html
+    2、https://www.cnblogs.com/lixuwu/p/5804793.html
+    3、https://blog.csdn.net/zhanlan_2017/article/details/81988612?utm_source=blogxgwz1
+-->
 
-<!-- Logback configuration. See http://logback.qos.ch/manual/index.html -->
-<configuration scan="true" scanPeriod="10 seconds">
-	<!--<include resource="org/springframework/boot/logging/logback/base.xml" 
-		/> -->
+<configuration>
+    <!--引入的properties配置文件-->
+    <property resource="logback.properties"/>
+    <!-- 本项目的名字，用于区分不同应用程序的记录 -->
+    <contextName>${context.name}</contextName>
 
-	<!--定义日志文件的存储地址和前缀名 -->
-	<property name="LOG_HOME" value="logs" />
-	<property name="LOG_PREFIX" value="zuul-server" />
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${conversion.pattern}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>info</level>
+        </filter>
+    </appender>
 
-	<!-- 一般信息按照每天生成日志文件 -->
-	<appender name="INFO_FILE"
-		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<File>${LOG_HOME}/${LOG_PREFIX}-info.log</File>
-		<rollingPolicy
-			class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-			<!-- 每天一归档 -->
-			<fileNamePattern>/${LOG_HOME}/${LOG_PREFIX}-info-%d{yyyyMMdd}.log.%i
-			</fileNamePattern>
-			<!-- 单个日志文件最多500MB, 30天的日志周期，最大不能超过20GB -->
-			<maxFileSize>100MB</maxFileSize>
-			<maxHistory>30</maxHistory>
-			<totalSizeCap>20GB</totalSizeCap>
-		</rollingPolicy>
-		<encoder>
-			<!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符 -->
-			<Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36}
-				-%msg%n</Pattern>
-		</encoder>
-	</appender>
+    <!-- root file 日志 -->
+    <appender name="root-file-error"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.dir}/${context.name}_error.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>
+                ${log.dir}/${context.name}_error.%d{${rolling.policy.file.name.pattern}}%d{mmss}.%i.log.zip
+            </fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>${max.file.size}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>${max.history}</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${conversion.pattern}</pattern>
+        </encoder>
+        <!-- 当日志级别等于设定的level，返回onMatch，否则返回onMismatch -->
+        <!-- onMatch也可以设定为DENY拒绝；match结果可以对应以下三个动作之一：
+         accept：整个过滤链不再向下走，直接返回通过操作
+         deny：整个过滤链不再向下走，直接返回不通过操作
+         neutral：不返回操作，继续沿过滤链走下一个过滤器-->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+    <appender name="root-file-warn"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.dir}/${context.name}_warn.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>
+                ${log.dir}/${context.name}_warn.%d{${rolling.policy.file.name.pattern}}%d{mmss}.%i.log.zip
+            </fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>${max.file.size}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>${max.history}</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${conversion.pattern}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>warn</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+    <appender name="root-file-info"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.dir}/${context.name}_info.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>
+                ${log.dir}/${context.name}_info.%d{${rolling.policy.file.name.pattern}}%d{mmss}.%i.log.zip
+            </fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>${max.file.size}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>${max.history}</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${conversion.pattern}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+    <appender name="root-file-debug"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.dir}/${context.name}_debug.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>
+                ${log.dir}/${context.name}_debug.%d{${rolling.policy.file.name.pattern}}%d{mmss}.%i.log.zip
+            </fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>${max.file.size}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>${max.history}</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${conversion.pattern}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>debug</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
 
-	<!--错误信息按照每天生成日志文件 -->
-	<appender name="ERROR_FILE"
-		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-			<level>ERROR</level>
-		</filter>
-		<File>${LOG_HOME}/${LOG_PREFIX}-error.log</File>
-		<rollingPolicy
-			class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-			<!-- 每天一归档 -->
-			<fileNamePattern>/${LOG_HOME}/${LOG_PREFIX}-error-%d{yyyyMMdd}.log.%i
-			</fileNamePattern>
-			<!-- 单个日志文件最多500MB, 30天的日志周期，最大不能超过20GB -->
-			<maxFileSize>100MB</maxFileSize>
-			<maxHistory>30</maxHistory>
-			<totalSizeCap>20GB</totalSizeCap>
-		</rollingPolicy>
-		<encoder>
-			<!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符 -->
-			<Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36}
-				-%msg%n</Pattern>
-		</encoder>
-	</appender>
+    <!--去掉不需要的日志-->
+    <logger name="io.swagger" additivity="false" level="OFF">
+        <appender-ref ref="console"/>
+    </logger>
 
-	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-		<encoder>
-			<!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符 -->
-			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} -
-				%msg%n</pattern>
-		</encoder>
-	</appender>
-
-	<!-- 日志输出级别 这样设置不打印日志 -->
-	<root level="INFO">
-		<appender-ref ref="STDOUT" />
-		<appender-ref ref="INFO_FILE" />
-		<appender-ref ref="ERROR_FILE" />
-	</root>
+    <root level="${root.level}">
+        <appender-ref ref="console"/>
+        <appender-ref ref="root-file-error"/>
+        <appender-ref ref="root-file-warn"/>
+        <appender-ref ref="root-file-info"/>
+        <appender-ref ref="root-file-debug"/>
+    </root>
 
 </configuration>
